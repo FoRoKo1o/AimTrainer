@@ -6,7 +6,7 @@ import 'score_view.dart'; // Importujemy widok ScoreView
 import 'dart:developer' as developer;
 
 class Ak extends StatefulWidget {
-  const Ak({Key? key}) : super(key: key);
+  const Ak({super.key});
 
   @override
   _AkState createState() => _AkState();
@@ -94,19 +94,20 @@ class _AkState extends State<Ak> with SingleTickerProviderStateMixin {
   }
 
   // Funkcja do obliczania odległości kółka od punktu animacji
-  void calculateDistance(Size size) {
-    if (_animation.value.floor() < Config.akPattern.length - 1) {
-      final int currentIndex = _animation.value.floor();
-      final List<num> currentPoint = currentIndex == 0 ? [size.width / 2, size.height] : Config.akPattern[currentIndex];
-      final List<num> nextPoint = Config.akPattern[currentIndex + 1];
-      
-      final dx = nextPoint[0] - currentPoint[0];
-      final dy = nextPoint[1] - currentPoint[1];
-      final distance = sqrt(dx * dx + dy * dy); // Obliczamy odległość między kółkiem a punktem animacji
-      developer.log(distance.toString());
-      distances.add(distance); // Dodajemy odległość do listy
-    }
+void calculateDistance(Size size) {
+  if (_animation.value.floor() < Config.akPattern.length - 1) {
+    final int currentIndex = _animation.value.floor();
+    final List<num> currentPoint = currentIndex == 0 ? [size.width / 2, size.height] : Config.akPattern[currentIndex];
+    final List<num> nextPoint = Config.akPattern[currentIndex + 1];
+    
+    final dx = nextPoint[0] - currentPoint[0] + _position.dx; // Poprawka: Dodajemy pozycję x kółka
+    final dy = nextPoint[1] - currentPoint[1] + _position.dy; // Poprawka: Dodajemy pozycję y kółka
+    final distance = sqrt(dx * dx + dy * dy); // Obliczamy odległość między kółkiem a punktem animacji
+    developer.log(distance.toString());
+    distances.add(distance); // Dodajemy odległość do listy
   }
+}
+
 
   // Funkcja do obliczania średniej odległości
   double calculateAverageDistance() {
