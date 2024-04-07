@@ -1,3 +1,4 @@
+import 'package:aimtrainer/test.dart';
 import 'package:flutter/material.dart';
 
 import 'ak.dart';
@@ -63,7 +64,12 @@ class HomePage extends StatelessWidget {
               Expanded(
                 child: Column(
                   children: [
-                    buildButton(context, "Przycisk 2", () {}),
+                    buildButton(context, "Test", () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Test1()),
+                      );
+                    }),
                     const SizedBox(height: 20.0),
                     buildButton(context, "Przycisk 4", () {}),
                     const SizedBox(height: 20.0),
